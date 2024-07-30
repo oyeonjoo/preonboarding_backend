@@ -1,6 +1,6 @@
 package com.sparta.preonboarding.global.jwt;
 
-import backend.preonboarding.domain.user.entity.UserRole;
+import com.sparta.preonboarding.domain.user.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

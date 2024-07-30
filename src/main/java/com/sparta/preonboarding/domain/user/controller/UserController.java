@@ -1,6 +1,6 @@
 package com.sparta.preonboarding.domain.user.controller;
 
-import backend.preonboarding.domain.user.service.UserService;
+import com.sparta.preonboarding.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

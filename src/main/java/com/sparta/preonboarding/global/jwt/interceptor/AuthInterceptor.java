@@ -1,6 +1,6 @@
 package com.sparta.preonboarding.global.jwt.interceptor;
 
-import backend.preonboarding.global.jwt.JwtUtil;
+import com.sparta.preonboarding.global.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Objects;
