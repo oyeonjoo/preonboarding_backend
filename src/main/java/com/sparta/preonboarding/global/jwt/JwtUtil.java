@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,22 +25,22 @@ import org.springframework.util.StringUtils;
 public class JwtUtil {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-
     public static final String AUTHORIZATION_KEY = "auth";
-
     public static final String BEARER_PREFIX = "Bearer ";
 
     private final long TOKEN_TIME = 30 * 60 * 1000L;
+//    private final long ACCESS_TOKEN_TIME = 30 * 60 * 100L;
+//    private final long REFRESH_TOKEN_TIME = 30 * 60 * 1000L;
 
     @Value("${jwt.secret.key}")
     private String secretKey;
 
+    private Key key;
+    private final Set<String> tokenBlackList = new HashSet<>();
+
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-    private Key key;
-
     @PostConstruct
-
     public void init() {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(bytes);
@@ -54,6 +56,9 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token) {
+        if(tokenBlackList.contains(token)) {
+            return false;
+        }
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
@@ -80,12 +85,37 @@ public class JwtUtil {
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
-                        .claim(AUTHORIZATION_KEY, role)
+                        .claim("username", username)
                         .setExpiration(expireDate)
                         .setIssuedAt(new Date())
                         .signWith(key, signatureAlgorithm)
                         .compact();
     }
+//    public String createAccessToken(String username, UserRole role) {
+//            Date expireDate = createExpireDate(ACCESS_TOKEN_TIME);
+//
+//            return BEARER_PREFIX +
+//                    Jwts.builder()
+//                            .setSubject(username)
+//                            .claim("username", username)
+//                            .setExpiration(expireDate)
+//                            .setIssuedAt(new Date())
+//                            .signWith(key, signatureAlgorithm)
+//                            .compact();
+//    }
+
+//    public String createRefreshToken(String username, UserRole role) {
+//        Date expireDate = createExpireDate(REFRESH_TOKEN_TIME);
+//
+//        return BEARER_PREFIX +
+//                Jwts.builder()
+//                        .setSubject(username)
+//                        .claim("username", username)
+//                        .setExpiration(expireDate)
+//                        .setIssuedAt(new Date())
+//                        .signWith(key, signatureAlgorithm)
+//                        .compact();
+//    }
 
     private Date createExpireDate(long expireDate) {
         long curTime = (new Date()).getTime();
