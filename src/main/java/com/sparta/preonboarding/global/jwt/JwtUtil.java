@@ -91,6 +91,5 @@ public class JwtUtil {
 
   public long getTokenExpirationInSeconds() {
     return TOKEN_TIME / 1000;
-
   }
 }
