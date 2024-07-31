@@ -74,12 +74,12 @@ public class JwtUtil {
                 .getBody();
     }
 
-    public String createToken(String email, UserRole role) {
+    public String createToken(String username, UserRole role) {
         Date expireDate = createExpireDate(TOKEN_TIME);
 
         return BEARER_PREFIX +
                 Jwts.builder()
-                        .setSubject(email)
+                        .setSubject(username)
                         .claim(AUTHORIZATION_KEY, role)
                         .setExpiration(expireDate)
                         .setIssuedAt(new Date())
