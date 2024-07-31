@@ -16,27 +16,27 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionDto> validExceptionHandler(MethodArgumentNotValidException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionDto(HttpStatus.BAD_REQUEST,
-                        Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage()));
-    }
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<ExceptionDto> validExceptionHandler(MethodArgumentNotValidException e) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(new ExceptionDto(HttpStatus.BAD_REQUEST,
+            Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage()));
+  }
 
-    @ExceptionHandler({
-            EntityNotFoundException.class,
-            PasswordNotMatchedException.class,
-            ValidationException.class,
-            LoginException.class,
-            BadRequestException.class
-    })
-    public ResponseEntity<ExceptionDto> badRequestExceptionHandler(RuntimeException e) {
-        return createResponse(HttpStatus.BAD_REQUEST, e.getMessage());
-    }
+  @ExceptionHandler({
+      EntityNotFoundException.class,
+      PasswordNotMatchedException.class,
+      ValidationException.class,
+      LoginException.class,
+      BadRequestException.class
+  })
+  public ResponseEntity<ExceptionDto> badRequestExceptionHandler(RuntimeException e) {
+    return createResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+  }
 
-    private ResponseEntity<ExceptionDto> createResponse(HttpStatus status, String message) {
-        return ResponseEntity
-                .status(status)
-                .body(new ExceptionDto(status, message));
-    }
+  private ResponseEntity<ExceptionDto> createResponse(HttpStatus status, String message) {
+    return ResponseEntity
+        .status(status)
+        .body(new ExceptionDto(status, message));
+  }
 }

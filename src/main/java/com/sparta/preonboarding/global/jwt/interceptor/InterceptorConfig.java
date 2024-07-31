@@ -9,15 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
 
-    private final AuthInterceptor authInterceptor;
+  private final AuthInterceptor authInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor)
-            .addPathPatterns("/api/v1/**", "/swagger-ui/index.html")
-            .excludePathPatterns(
-                "/api/v1/users/signup",
-                "/api/v1/users/sign"
-            );
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(authInterceptor)
+        .addPathPatterns("/api/v1/**", "/swagger-ui/index.html")
+        .excludePathPatterns(
+            "/api/v1/users/signup",
+            "/api/v1/users/sign"
+        );
+  }
 }

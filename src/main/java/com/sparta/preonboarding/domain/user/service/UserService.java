@@ -22,50 +22,51 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
 
-    public SignupResponse signup(SignupRequest dto) {
-        String username = dto.getUsername();
-        String password = passwordEncoder.encode(dto.getPassword());
-        String nickname = dto.getNickname();
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtUtil jwtUtil;
 
-        validateUsername(username);
+  public SignupResponse signup(SignupRequest dto) {
+    String username = dto.getUsername();
+    String password = passwordEncoder.encode(dto.getPassword());
+    String nickname = dto.getNickname();
 
-        User user = new User(username, password, nickname);
-        userRepository.save(user);
+    validateUsername(username);
 
-        return new SignupResponse(username, nickname, mapAuthorities(List.of(UserRole.USER)));
+    User user = new User(username, password, nickname);
+    userRepository.save(user);
+
+    return new SignupResponse(username, nickname, mapAuthorities(List.of(UserRole.USER)));
+  }
+
+  public String sign(SignRequest dto) {
+    User user = userRepository.findByUsername(dto.getUsername())
+        .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자 입니다."));
+
+    validateUserPassword(user, dto.getPassword());
+
+    return jwtUtil.createToken(user.getUsername(), user.getRole());
+  }
+
+  private void validateUsername(String username) {
+    Optional<User> checkUsername = userRepository.findByUsername(username);
+    if (checkUsername.isPresent()) {
+      throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
     }
+  }
 
-    public String sign(SignRequest dto) {
-        User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자 입니다."));
-
-        validateUserPassword(user, dto.getPassword());
-
-        return jwtUtil.createToken(user.getUsername(), user.getRole());
+  private List<AuthorityDto> mapAuthorities(List<UserRole> roles) {
+    List<AuthorityDto> authorities = new ArrayList<>();
+    for (UserRole role : roles) {
+      authorities.add(new AuthorityDto(role.getAuthority()));
     }
+    return authorities;
+  }
 
-    private void validateUsername(String username) {
-        Optional<User> checkUsername = userRepository.findByUsername(username);
-        if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
-        }
+  private void validateUserPassword(User user, String password) {
+    if (user.isNotMatchPassword(passwordEncoder, password)) {
+      throw new PasswordNotMatchedException("비밀번호가 일치하지 않습니다.");
     }
-
-    private List<AuthorityDto> mapAuthorities(List<UserRole> roles) {
-        List<AuthorityDto> authorities = new ArrayList<>();
-        for (UserRole role : roles) {
-            authorities.add(new AuthorityDto(role.getAuthority()));
-        }
-        return authorities;
-    }
-
-    private void validateUserPassword(User user, String password) {
-        if (user.isNotMatchPassword(passwordEncoder, password)) {
-            throw new PasswordNotMatchedException("비밀번호가 일치하지 않습니다.");
-        }
-    }
+  }
 }

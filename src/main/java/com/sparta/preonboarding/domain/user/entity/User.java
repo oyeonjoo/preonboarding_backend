@@ -25,36 +25,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Table(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "user_id")
+  private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+  @Column(nullable = false, unique = true)
+  private String username;
 
-    @Column(nullable = false)
-    private String password;
+  @Column(nullable = false)
+  private String password;
 
-    @Column(nullable = false)
-    private String nickName;
+  @Column(nullable = false)
+  private String nickName;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+  @Enumerated(EnumType.STRING)
+  private UserRole role;
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
+  @CreatedDate
+  @Column(updatable = false)
+  private LocalDateTime createdAt;
 
-    public User(String username, String password, String nickName) {
-        this.username = username;
-        this.password = password;
-        this.nickName = nickName;
-    }
+  public User(String username, String password, String nickName) {
+    this.username = username;
+    this.password = password;
+    this.nickName = nickName;
+  }
 
-    public boolean isNotMatchPassword(PasswordEncoder passwordEncoder, String password) {
-        return !passwordEncoder.matches(password, this.password);
-    }
-
-
+  public boolean isNotMatchPassword(PasswordEncoder passwordEncoder, String password) {
+    return !passwordEncoder.matches(password, this.password);
+  }
 }

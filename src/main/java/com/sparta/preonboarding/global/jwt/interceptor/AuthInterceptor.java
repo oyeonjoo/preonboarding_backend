@@ -16,45 +16,45 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
 
-    private final JwtUtil jwtUtil;
+  private final JwtUtil jwtUtil;
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler) throws Exception {
-        if (isPreflightRequest(request)) {
-            return true;
-        }
-        String token = jwtUtil.getTokenFromHeader(request);
-        if (ObjectUtils.isEmpty(token)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return false;
-        }
-
-        String subject = jwtUtil.getUserInfoFromToken(token).getSubject();
-
-        request.setAttribute("subject", subject);
-        return true;
-
+  @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+      Object handler) throws Exception {
+    if (isPreflightRequest(request)) {
+      return true;
+    }
+    String token = jwtUtil.getTokenFromHeader(request);
+    if (ObjectUtils.isEmpty(token)) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return false;
     }
 
-    private boolean isPreflightRequest(HttpServletRequest request) {
-        return isOptions(request) && hasHeaders(request) && hasMethod(request) && hasOrigin(
-            request);
-    }
+    String subject = jwtUtil.getUserInfoFromToken(token).getSubject();
 
-    private boolean isOptions(HttpServletRequest request) {
-        return request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.toString());
-    }
+    request.setAttribute("subject", subject);
+    return true;
 
-    private boolean hasHeaders(HttpServletRequest request) {
-        return Objects.nonNull(request.getHeader("Access-Control-Request-Headers"));
-    }
+  }
 
-    private boolean hasMethod(HttpServletRequest request) {
-        return Objects.nonNull(request.getHeader("Access-Control-Request-Method"));
-    }
+  private boolean isPreflightRequest(HttpServletRequest request) {
+    return isOptions(request) && hasHeaders(request) && hasMethod(request) && hasOrigin(
+        request);
+  }
 
-    private boolean hasOrigin(HttpServletRequest request) {
-        return Objects.nonNull(request.getHeader("Origin"));
-    }
+  private boolean isOptions(HttpServletRequest request) {
+    return request.getMethod().equalsIgnoreCase(HttpMethod.OPTIONS.toString());
+  }
+
+  private boolean hasHeaders(HttpServletRequest request) {
+    return Objects.nonNull(request.getHeader("Access-Control-Request-Headers"));
+  }
+
+  private boolean hasMethod(HttpServletRequest request) {
+    return Objects.nonNull(request.getHeader("Access-Control-Request-Method"));
+  }
+
+  private boolean hasOrigin(HttpServletRequest request) {
+    return Objects.nonNull(request.getHeader("Origin"));
+  }
 }

@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignResponse {
 
-    private String token;
+  private String token;
 }

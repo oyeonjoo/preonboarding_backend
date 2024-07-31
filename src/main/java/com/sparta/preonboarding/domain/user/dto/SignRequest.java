@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignRequest {
 
-    @NotBlank(message = "이름을 입력하세요.")
-    private String username;
+  @NotBlank(message = "이름을 입력하세요.")
+  private String username;
 
-    @NotBlank(message = "비밀번호를 입력하세요.")
-    private String password;
+  @NotBlank(message = "비밀번호를 입력하세요.")
+  private String password;
 }

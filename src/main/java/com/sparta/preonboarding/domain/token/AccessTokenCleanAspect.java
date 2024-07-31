@@ -2,7 +2,6 @@ package com.sparta.preonboarding.domain.token;
 
 import com.sparta.preonboarding.domain.token.service.AccessTokenService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Comment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

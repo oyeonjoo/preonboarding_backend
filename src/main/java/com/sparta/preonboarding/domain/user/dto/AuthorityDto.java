@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthorityDto {
 
-    private String authorityName;
+  private String authorityName;
 }
