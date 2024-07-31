@@ -18,33 +18,33 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class SwaggerConfig {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        Components components = new Components()
-                .addSecuritySchemes(JWT, authScheme());
-        SecurityRequirement securityItem = new SecurityRequirement()
-                .addList(JWT);
+  @Bean
+  public OpenAPI customOpenAPI() {
+    Components components = new Components()
+        .addSecuritySchemes("JWT", authScheme());
+    SecurityRequirement securityItem = new SecurityRequirement()
+        .addList("JWT");
 
-        return new OpenAPI().info(new Info()
-                        .title("openAPI.")
-                        .version("1.0")
-                        .description("swagger-ui 화면입니다"))
-                .components(components)
-                .addSecurityItem(securityItem);
-    }
+    return new OpenAPI().info(new Info()
+            .title("openAPI.")
+            .version("1.0")
+            .description("swagger-ui 화면입니다"))
+        .components(components)
+        .addSecurityItem(securityItem);
+  }
 
-    private SecurityScheme authScheme() {
-        return new SecurityScheme().type(Type.APIKEY).scheme("Bearer").in(In.HEADER)
-                .name("Authorization");
-    }
+  private SecurityScheme authScheme() {
+    return new SecurityScheme().type(Type.APIKEY).scheme("Bearer").in(In.HEADER)
+        .name("Authorization");
+  }
 
-    @Bean
-    public GroupedOpenApi api() {
-        String[] paths = {"/api/v1/**"};
-        String[] packagesToScan = {"backend.preonboarding"};
-        return GroupedOpenApi.builder().group("springdoc-openapi")
-                .pathsToMatch(paths)
-                .packagesToScan(packagesToScan)
-                .build();
-    }
+  @Bean
+  public GroupedOpenApi api() {
+    String[] paths = {"/api/v1/**"};
+    String[] packagesToScan = {"com.sparta.preonboarding"};
+    return GroupedOpenApi.builder().group("springdoc-openapi")
+        .pathsToMatch(paths)
+        .packagesToScan(packagesToScan)
+        .build();
+  }
 }
