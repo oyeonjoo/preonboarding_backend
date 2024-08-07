@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Builder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -48,17 +47,21 @@ public class AccessToken {
 
   private boolean isBlacklisted = false;
 
+  @Builder
   public AccessToken(
       String token,
       String username,
       UserRole role,
       LocalDateTime issuedAt,
-      LocalDateTime expiredAt) {
+      LocalDateTime expiredAt,
+      boolean isBlacklisted
+  ) {
     this.token = token;
     this.username = username;
     this.role = role;
     this.issuedAt = issuedAt;
     this.expiredAt = expiredAt;
+    this.isBlacklisted = isBlacklisted;
   }
 
   public void blacklistToken() {
