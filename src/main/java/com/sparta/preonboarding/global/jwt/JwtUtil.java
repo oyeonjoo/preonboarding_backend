@@ -42,7 +42,6 @@ public class JwtUtil {
 
   public String getTokenFromHeader(HttpServletRequest request) {
     String tokenValue = request.getHeader(AUTHORIZATION_HEADER);
-    log.info(tokenValue);
     if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
       return tokenValue.substring(7);
     }
@@ -54,13 +53,17 @@ public class JwtUtil {
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
       return true;
     } catch (SecurityException | MalformedJwtException e) {
-      log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+      log.error("JWT validation failed.");
+      log.debug("Detailed error: Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
     } catch (ExpiredJwtException e) {
-      log.error("Expired JWT token, 만료된 JWT token 입니다.");
+      log.error("JWT validation failed.");
+      log.debug("Detailed error: Expired JWT token, 만료된 JWT token 입니다.");
     } catch (UnsupportedJwtException e) {
-      log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+      log.error("JWT validation failed.");
+      log.debug("Detailed error: Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
     } catch (IllegalArgumentException e) {
-      log.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
+      log.error("JWT validation failed.");
+      log.debug("Detailed error: JWT claims is empty, 잘못된 JWT 토큰 입니다.");
     }
     return false;
   }
