@@ -115,7 +115,7 @@
   - 해결방안
     - 로그 레벨을 환경에 맞게 설정하여 개발 환경에서는 디버깅에 필요한 세부 정보를 기록하되, 운영 환경에서는 최소한의 정보를 기록하도록 한다.
     - 로그 메시지에서 구체적인 예외 정보나 민감한 데이터를 제거하고, 일반적인 오류 메시지를 남기는 것이 좋다.
-  ```java
+     ```java
      public boolean validateToken(String token) {
       try {
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -135,7 +135,7 @@
       }
       return false;
       }
-    ```
+     ```
 
 
 -[x] Entity에 사용한 어노테이션에 대한 설명
