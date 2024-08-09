@@ -107,8 +107,8 @@
 
 
 ### 📍 개선 사항
--[x] `Spring Security + JWT`를 이용해 구현해보기 (진행중)
--[x] `JwtUtil`에서 로그가 노출되는 부분
+- 📝 ️`Spring Security + JWT`를 이용해 구현해보기 (진행중)
+- ✅ `JwtUtil`에서 로그가 노출되는 부분
   - 문제점
     - JWT token 검증 중 발생한 예외를 로그에 상세하게 기록하는 것은 개발 및 운영 시 문제를 진단하는 데 유용할 수 있지만, 로그에 민감한 정보를 노출하게 되면 보안적인 문제를 초래할 수 있다.
     - 예를 들면, `"Invalid JWT signature"`와 같은 메시지는 공격자에게 서명 검증에 실패했다는 것을 알려주며, 이를 통해 서명 알고리즘에 대한 정보를 유추할 수 있게 된다.
@@ -138,14 +138,14 @@
      ```
 
 
--[x] Entity에 사용한 어노테이션에 대한 설명
-  -[x] 생성자 어노테이션에서 `AccessLevel.PRIVATE, PROTECTED`를 사용한 이유
+- ✅ Entity에 사용한 어노테이션에 대한 설명
+  - 생성자 어노테이션에서 `AccessLevel.PRIVATE, PROTECTED`를 사용한 이유
     - 생성자 어노테이션에서 AccessLevel을 설정한 이유는 외부에서의 무분별한 객체 생성을 막기 위해서이다.
     - JPA는 기본 생성자가 없으면 엔티티를 생성할 수 없기 때문에 JPA가 객체를 생성할 수 있도록 하기 위해 기본 생성자는 PROTECTED로 설정하였다.
     - 모든 필드를 초기화하는 생성자는 필요시 빌터 패턴을 사용해서 객체를 생성하기 위해 PRIVATE으로 설정하였다.
-  -[x] `@CreateDate`, `@Column(updatable = false)`를 사용한 이유
+  - `@CreateDate`, `@Column(updatable = false)`를 사용한 이유
     - Entity가 생성되어 저장될 때 시간이 자동 저장되며, 생성일의 업데이트를 막기위해 사용했다.
-  -[x] `@EntityListeners(AuditingEntityListener.class)`를 사용한 이유
+  - `@EntityListeners(AuditingEntityListener.class)`를 사용한 이유
     - JPA에서는 `Audit`이라는 기능을 제공하고 있다. Audit은 `감시하다`라는 뜻으로 Spring Data JPA에서 시간에 대해 자동으로 값을 넣어주는 기능이다.
       이를 사용하여 엔티티가 생성되고, 변경되는 시점을 감지하여 생성 시각, 수정 시각, 생성한 사람, 수정한 사람을 기록할 수 있다.
     - 해당 클래스에 Auditing 기능을 포함하기 위해 사용했다.
