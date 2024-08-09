@@ -70,25 +70,25 @@
 ### 📍 피드백
 - `Spring Security + JWT`를 이용해 구현해보기
   - JWT 라이브러리는 잘 사용했지만 공유해 준 래퍼런스를 보고, JWT가 발급되는 과정에 대해 좀 더 공부하고 다시 구현해봤으면 좋겠다.
-- JwtUtil에서 로그가 노출되는 부분에 대해 어떻게 생각하는지
-  - `validateToken` 메소드에서 로그가 상세하게 노출되는 부분에 대해 어떻게 생각하는지 궁금하다.
-  ```java
-   public boolean validateToken(String token) {
-    try {
-    Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-    return true;
-    } catch (SecurityException | MalformedJwtException e) {
-    log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
-    } catch (ExpiredJwtException e) {
-    log.error("Expired JWT token, 만료된 JWT token 입니다.");
-    } catch (UnsupportedJwtException e) {
-    log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
-    } catch (IllegalArgumentException e) {
-    log.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
-    }
-    return false;
-    }
-  ```
+  - JwtUtil에서 로그가 노출되는 부분에 대해 어떻게 생각하는지
+    - `validateToken` 메소드에서 로그가 상세하게 노출되는 부분에 대해 어떻게 생각하는지 궁금하다.
+    ```java
+     public boolean validateToken(String token) {
+      try {
+      Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+      return true;
+      } catch (SecurityException | MalformedJwtException e) {
+      log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+      } catch (ExpiredJwtException e) {
+      log.error("Expired JWT token, 만료된 JWT token 입니다.");
+      } catch (UnsupportedJwtException e) {
+      log.error("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+      } catch (IllegalArgumentException e) {
+      log.error("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
+      }
+      return false;
+      }
+    ```
 - Entity에 사용한 어노테이션에 대한 설명
   - 생성자 어노테이션의 Access Level
     - `Access Level`을 왜 `PRIVATE`, `PROTECTED`로 설정했는지 설명할 수 있었으면 좋겠다.
@@ -103,7 +103,7 @@
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime issuedAt;
-    ```
+     ```
 
 
 ### 📍 개선 사항
