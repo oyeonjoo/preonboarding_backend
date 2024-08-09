@@ -147,3 +147,7 @@
     - JPA에서는 `Audit`이라는 기능을 제공하고 있다. Audit은 `감시하다`라는 뜻으로 Spring Data JPA에서 시간에 대해 자동으로 값을 넣어주는 기능이다.
       이를 사용하여 엔티티가 생성되고, 변경되는 시점을 감지하여 생성 시각, 수정 시각, 생성한 사람, 수정한 사람을 기록할 수 있다.
     - 해당 클래스에 Auditing 기능을 포함하기 위해 사용했다.
+
+###
+### 📍 Reference
+- https://velog.io/@limsubin/Spring-Security-JWT-%EC%9D%84-%EA%B5%AC%ED%98%84%ED%95%B4%EB%B3%B4%EC%9E%90
