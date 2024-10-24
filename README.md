@@ -142,7 +142,7 @@
   - 생성자 어노테이션에서 `AccessLevel.PRIVATE, PROTECTED`를 사용한 이유
     - 생성자 어노테이션에서 AccessLevel을 설정한 이유는 외부에서의 무분별한 객체 생성을 막기 위해서이다.
     - JPA는 기본 생성자가 없으면 엔티티를 생성할 수 없기 때문에 JPA가 객체를 생성할 수 있도록 하기 위해 기본 생성자는 PROTECTED로 설정하였다.
-    - 모든 필드를 초기화하는 생성자는 필요시 빌터 패턴을 사용해서 객체를 생성하기 위해 PRIVATE으로 설정하였다.
+    - 모든 필드를 초기화하는 생성자는 필요시 빌더 패턴을 사용해서 객체를 생성하기 위해 PRIVATE으로 설정하였다.
   - `@CreateDate`, `@Column(updatable = false)`를 사용한 이유
     - Entity가 생성되어 저장될 때 시간이 자동 저장되며, 생성일의 업데이트를 막기위해 사용했다.
   - `@EntityListeners(AuditingEntityListener.class)`를 사용한 이유
